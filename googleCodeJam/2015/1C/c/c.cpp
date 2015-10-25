@@ -1,20 +1,40 @@
-#include <bits/stdc++.h>
-using namespace std;
-long int d[100];
+#include <stdio.h>
+#include <assert.h>
+#include <strings.h>
+#include <string.h>
+#include <stdlib.h>
 
-int main() {
-    int T;
-    scanf("%d", &T);
-    for(int t=1;t<=T;t++) {
-        int  C, D, V;
-        scanf("%d %d %d", &C, &D, &V);
-        for(int i=0; i<D; i++) scanf("%ld", &d[i]);
-        int i=0, j=0;
-        long int range=0;
-        while(range < V)
-            if(range >= d[j]-1 && j < D) {range += C*d[j]; j++;}
-            else {range += C*(range+1); i++;}
-        printf("Case #%d: %d\n", t, i);
+void solve (void) {
+  int c, d, v;
+  assert (scanf ("%d %d %d", &c, &d, &v) == 3);
+  static int val[1000];
+  int i;
+  for (i = 0; i < d; i++) {
+    assert (scanf ("%d", &val[i]) == 1);
+  }
+
+  long long max = 0;
+  int count = 0;
+  int cur = 0;
+  while (max < v) {
+    if (cur < d && val[cur] <= max + 1) {
+      max += c * (long long)val[cur];
+      cur ++;
+    } else {
+      count ++;
+      max += c * (long long)(max + 1);
     }
-    return 0;
+  }
+  printf ("%d\n", count);
+}
+
+int main () {
+  int _;
+  assert (scanf ("%d\n", &_) == 1);
+  int __;
+  for (__ = 0; __ < _; __ ++) {
+    printf ("Case #%d: ", __ + 1);
+    solve ();
+  }
+  return 0;
 }
